@@ -194,3 +194,40 @@ class CoffeeMachineApp:
             f"Drinks prepared since last cleaning: {self.machine.maintenance_count}"
         )
         messagebox.showinfo("Resource Status", status)
+
+    def add_resources_window(self):
+        # Show a window for adding more resources to the machine
+        add_window = tk.Toplevel(self.root)
+        add_window.title("Add Resources")
+
+        tk.Label(add_window, text="Water (ml):").grid(row=0, column=0, padx=5, pady=5)
+        water_entry = tk.Entry(add_window)
+        water_entry.grid(row=0, column=1, padx=5, pady=5)
+
+        tk.Label(add_window, text="Coffee Beans (g):").grid(row=1, column=0, padx=5, pady=5)
+        coffee_entry = tk.Entry(add_window)
+        coffee_entry.grid(row=1, column=1, padx=5, pady=5)
+
+        tk.Label(add_window, text="Milk (ml):").grid(row=2, column=0, padx=5, pady=5)
+        milk_entry = tk.Entry(add_window)
+        milk_entry.grid(row=2, column=1, padx=5, pady=5)
+
+        tk.Label(add_window, text="Sugar (g):").grid(row=3, column=0, padx=5, pady=5)
+        sugar_entry = tk.Entry(add_window)
+        sugar_entry.grid(row=3, column=1, padx=5, pady=5)
+
+        def add_resources():
+            # Add resources to the machine after valid input
+            try:
+                water = int(water_entry.get() or 0)
+                coffee = int(coffee_entry.get() or 0)
+                milk = int(milk_entry.get() or 0)
+                sugar = int(sugar_entry.get() or 0)
+                self.machine.add_resources(water, coffee, milk, sugar)
+                add_window.destroy()
+                messagebox.showinfo("Resources Added", "Resources added successfully!")
+            except ValueError:
+                messagebox.showerror("Error", "Please enter valid values for resources.")
+
+        add_button = tk.Button(add_window, text="Add", command=add_resources)
+        add_button.grid(row=4, columnspan=2, pady=10)
