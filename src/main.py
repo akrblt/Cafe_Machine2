@@ -180,3 +180,17 @@ class CoffeeMachineApp:
         messagebox.showinfo("Preparation", result)
         if "prepared" in result:
             self.show_coffee_cup(drink, size)  # Show coffee cup animation if prepared
+
+
+    def show_status(self):
+        # Show the current resource status (water, coffee beans, milk, etc.)
+        status = (
+            f"Current Resources:\n"
+            f"Water: {self.machine.water} ml\n"
+            f"Coffee Beans: {self.machine.coffee_beans} g\n"
+            f"Milk: {self.machine.milk} ml\n"
+            f"Sugar: {self.machine.sugar} g\n"
+            f"Balance: {self.machine.balance}€\n"
+            f"Drinks prepared since last cleaning: {self.machine.maintenance_count}"
+        )
+        messagebox.showinfo("Resource Status", status)
