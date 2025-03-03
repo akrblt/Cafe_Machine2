@@ -231,3 +231,11 @@ class CoffeeMachineApp:
 
         add_button = tk.Button(add_window, text="Add", command=add_resources)
         add_button.grid(row=4, columnspan=2, pady=10)
+
+    def clean_machine(self):
+        # Clean the machine and reset maintenance counter
+        self.machine.clean_machine()
+        messagebox.showinfo("Machine Cleaned", "The machine has been successfully cleaned!")
+
+
+
