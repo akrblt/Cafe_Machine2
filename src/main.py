@@ -77,5 +77,42 @@ class CoffeeMachine:
             # Clean the machine by resetting the maintenance counter
             self.maintenance_count = 0
 
+class CoffeeMachineApp:
+    def __init__(self, root):
+        self.machine = CoffeeMachine()  # Create an instance of the CoffeeMachine
+        self.root = root
+        self.root.title("Coffee Machine Simulation")  # Set window title
+        self.create_widgets()  # Create the user interface widgets
+
+    def create_widgets(self):
+        # Create widgets for the main window
+        tk.Label(self.root, text="Coffee Machine", font=("Helvetica", 16, "bold")).pack(pady=10)
+
+        frame_menu = tk.Frame(self.root)
+        frame_menu.pack(pady=10)
+        tk.Label(frame_menu, text="Drink Menu:", font=("Helvetica", 12)).pack()
+
+        # Create buttons for each drink in the menu
+        for drink in self.machine.menu.keys():
+            btn = tk.Button(
+                frame_menu,
+                text=f"{drink} ({self.machine.menu[drink]['price']}€)",
+                command=lambda d=drink: self.show_size_and_payment_window(d),
+                width=25,
+            )
+            btn.pack(pady=5)
+
+        # Create action buttons
+        frame_actions = tk.Frame(self.root)
+        frame_actions.pack(pady=10)
+        tk.Button(frame_actions, text="Show Resources", command=self.show_status, width=20).pack(pady=5)
+        tk.Button(frame_actions, text="Add Resources", command=self.add_resources_window, width=20).pack(pady=5)
+        tk.Button(frame_actions, text="Clean Machine", command=self.clean_machine, width=20).pack(pady=5)
+        tk.Button(frame_actions, text="Quit", command=self.root.quit, width=20).pack(pady=5)
+
+        # Canvas for coffee cup animation
+        self.canvas = tk.Canvas(self.root, width=300, height=300, bg="white")
+        self.canvas.pack(pady=10)
+
 
 
