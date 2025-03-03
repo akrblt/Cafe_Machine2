@@ -114,5 +114,19 @@ class CoffeeMachineApp:
         self.canvas = tk.Canvas(self.root, width=300, height=300, bg="white")
         self.canvas.pack(pady=10)
 
+    def show_size_and_payment_window(self, drink):
+        # Show a window for selecting the size of the drink
+        size_window = tk.Toplevel(self.root)
+        size_window.title(f"Select Size for {drink}")
+
+        tk.Label(size_window, text="Select Size:", font=("Helvetica", 12)).pack(pady=10)
+
+        # Options for drink sizes (S, M, L)
+        sizes = [("S", 1), ("M", 2), ("L", 3)]
+        for size_name, size_value in sizes:
+            btn = tk.Button(size_window, text=f"{size_name} - {size_value} dl",
+                            command=lambda s=size_value, d=drink: self.show_payment_window(s, d, size_window))
+            btn.pack(pady=5)
+
 
 
