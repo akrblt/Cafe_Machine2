@@ -77,5 +77,165 @@ class CoffeeMachine:
             # Clean the machine by resetting the maintenance counter
             self.maintenance_count = 0
 
+class CoffeeMachineApp:
+    def __init__(self, root):
+        self.machine = CoffeeMachine()  # Create an instance of the CoffeeMachine
+        self.root = root
+        self.root.title("Coffee Machine Simulation")  # Set window title
+        self.create_widgets()  # Create the user interface widgets
+
+    def create_widgets(self):
+        # Create widgets for the main window
+        tk.Label(self.root, text="Coffee Machine", font=("Helvetica", 16, "bold")).pack(pady=10)
+
+        frame_menu = tk.Frame(self.root)
+        frame_menu.pack(pady=10)
+        tk.Label(frame_menu, text="Drink Menu:", font=("Helvetica", 12)).pack()
+
+        # Create buttons for each drink in the menu
+        for drink in self.machine.menu.keys():
+            btn = tk.Button(
+                frame_menu,
+                text=f"{drink} ({self.machine.menu[drink]['price']}€)",
+                command=lambda d=drink: self.show_size_and_payment_window(d),
+                width=25,
+            )
+            btn.pack(pady=5)
+
+        # Create action buttons
+        frame_actions = tk.Frame(self.root)
+        frame_actions.pack(pady=10)
+        tk.Button(frame_actions, text="Show Resources", command=self.show_status, width=20).pack(pady=5)
+        tk.Button(frame_actions, text="Add Resources", command=self.add_resources_window, width=20).pack(pady=5)
+        tk.Button(frame_actions, text="Clean Machine", command=self.clean_machine, width=20).pack(pady=5)
+        tk.Button(frame_actions, text="Quit", command=self.root.quit, width=20).pack(pady=5)
+
+        # Canvas for coffee cup animation
+        self.canvas = tk.Canvas(self.root, width=300, height=300, bg="white")
+        self.canvas.pack(pady=10)
+
+    def show_size_and_payment_window(self, drink):
+        # Show a window for selecting the size of the drink
+        size_window = tk.Toplevel(self.root)
+        size_window.title(f"Select Size for {drink}")
+
+        tk.Label(size_window, text="Select Size:", font=("Helvetica", 12)).pack(pady=10)
+
+        # Options for drink sizes (S, M, L)
+        sizes = [("S", 1), ("M", 2), ("L", 3)]
+        for size_name, size_value in sizes:
+            btn = tk.Button(size_window, text=f"{size_name} - {size_value} dl",
+                            command=lambda s=size_value, d=drink: self.show_payment_window(s, d, size_window))
+            btn.pack(pady=5)
+
+
+
+    def show_payment_window(self, size, drink, size_window):
+        # Show a window for selecting the payment method
+        size_window.destroy()  # Close size selection window
+        payment_window = tk.Toplevel(self.root)
+        payment_window.title("Select Payment Method")
+
+        tk.Label(payment_window, text="Select Payment Method:", font=("Helvetica", 12)).pack(pady=10)
+
+        # Available payment methods
+        payment_methods = ["Twint", "Cash", "Card"]
+        for method in payment_methods:
+            btn = tk.Button(payment_window, text=method,
+                            command=lambda m=method, s=size, d=drink: self.process_payment(m, s, d, payment_window))
+            btn.pack(pady=5)
+
+    def process_payment(self, method, size, drink, payment_window):
+        # Calculate the price based on the selected drink and size
+        price = self.machine.menu[drink]["price"]
+
+        # Adjust price based on size
+        if size == 2:  # Medium (M)
+            price += 0.50
+        elif size == 3:  # Large (L)
+            price += 1.00
+
+        payment_window.destroy()  # Close payment window
+
+        # Ask user for payment confirmation
+        result = messagebox.askyesno("Payment", f"Do you want to pay {price}€ via {method}?")
+
+        if result:
+            # Payment successful
+            messagebox.showinfo("Payment Successful", f"Payment of {price}€ via {method} successful.")
+
+            # Start preparing the drink
+            preparation_result = self.prepare_drink(drink, size)
+
+            # Show the result of the drink preparation
+            messagebox.showinfo("Preparation", preparation_result)
+
+        else:
+            # Payment failed
+            messagebox.showerror("Payment Failed", "Payment was not completed.")
+
+    def prepare_drink(self, drink, size):
+        # Prepare the selected drink and show the result
+        result = self.machine.prepare_drink(drink, size)
+        messagebox.showinfo("Preparation", result)
+        if "prepared" in result:
+            self.show_coffee_cup(drink, size)  # Show coffee cup animation if prepared
+
+
+    def show_status(self):
+        # Show the current resource status (water, coffee beans, milk, etc.)
+        status = (
+            f"Current Resources:\n"
+            f"Water: {self.machine.water} ml\n"
+            f"Coffee Beans: {self.machine.coffee_beans} g\n"
+            f"Milk: {self.machine.milk} ml\n"
+            f"Sugar: {self.machine.sugar} g\n"
+            f"Balance: {self.machine.balance}€\n"
+            f"Drinks prepared since last cleaning: {self.machine.maintenance_count}"
+        )
+        messagebox.showinfo("Resource Status", status)
+
+    def add_resources_window(self):
+        # Show a window for adding more resources to the machine
+        add_window = tk.Toplevel(self.root)
+        add_window.title("Add Resources")
+
+        tk.Label(add_window, text="Water (ml):").grid(row=0, column=0, padx=5, pady=5)
+        water_entry = tk.Entry(add_window)
+        water_entry.grid(row=0, column=1, padx=5, pady=5)
+
+        tk.Label(add_window, text="Coffee Beans (g):").grid(row=1, column=0, padx=5, pady=5)
+        coffee_entry = tk.Entry(add_window)
+        coffee_entry.grid(row=1, column=1, padx=5, pady=5)
+
+        tk.Label(add_window, text="Milk (ml):").grid(row=2, column=0, padx=5, pady=5)
+        milk_entry = tk.Entry(add_window)
+        milk_entry.grid(row=2, column=1, padx=5, pady=5)
+
+        tk.Label(add_window, text="Sugar (g):").grid(row=3, column=0, padx=5, pady=5)
+        sugar_entry = tk.Entry(add_window)
+        sugar_entry.grid(row=3, column=1, padx=5, pady=5)
+
+        def add_resources():
+            # Add resources to the machine after valid input
+            try:
+                water = int(water_entry.get() or 0)
+                coffee = int(coffee_entry.get() or 0)
+                milk = int(milk_entry.get() or 0)
+                sugar = int(sugar_entry.get() or 0)
+                self.machine.add_resources(water, coffee, milk, sugar)
+                add_window.destroy()
+                messagebox.showinfo("Resources Added", "Resources added successfully!")
+            except ValueError:
+                messagebox.showerror("Error", "Please enter valid values for resources.")
+
+        add_button = tk.Button(add_window, text="Add", command=add_resources)
+        add_button.grid(row=4, columnspan=2, pady=10)
+
+    def clean_machine(self):
+        # Clean the machine and reset maintenance counter
+        self.machine.clean_machine()
+        messagebox.showinfo("Machine Cleaned", "The machine has been successfully cleaned!")
+
 
 
