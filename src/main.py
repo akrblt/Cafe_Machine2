@@ -259,6 +259,20 @@ class CoffeeMachineApp:
         # Animate filling the coffee cup
         self.animate_coffee_fill(target_height)
 
+    def animate_coffee_fill(self, target_height):
+        # Animate the coffee filling into the cup
+        current_height = 0
+        increment = 5  # Filling speed
+
+        def fill_coffee():
+            nonlocal current_height
+            if current_height < target_height:
+                current_height += increment
+                self.canvas.create_rectangle(90, 300 - current_height, 210, 300, fill="black", outline="black")
+                self.root.after(50, fill_coffee)  # Call the fill function repeatedly
+
+        fill_coffee()
+
 
 
 # Create the Tkinter window
