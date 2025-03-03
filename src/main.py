@@ -239,3 +239,9 @@ class CoffeeMachineApp:
 
 
 
+
+
+# Create the Tkinter window
+root = tk.Tk()
+app = CoffeeMachineApp(root)  # Create the CoffeeMachineApp instance
+root.mainloop()  # Start the Tkinter main loop
