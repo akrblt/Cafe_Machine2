@@ -173,3 +173,10 @@ class CoffeeMachineApp:
         else:
             # Payment failed
             messagebox.showerror("Payment Failed", "Payment was not completed.")
+
+    def prepare_drink(self, drink, size):
+        # Prepare the selected drink and show the result
+        result = self.machine.prepare_drink(drink, size)
+        messagebox.showinfo("Preparation", result)
+        if "prepared" in result:
+            self.show_coffee_cup(drink, size)  # Show coffee cup animation if prepared
