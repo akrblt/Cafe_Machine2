@@ -247,10 +247,10 @@ class CoffeeMachineApp:
         color = self.machine.menu[drink]["color"]  # Get the color for the drink
 
         # Draw a coffee cup with the specific color
-        cup_width = 120
-        cup_height = 200
-        cup_top_left_x = 90
-        cup_top_left_y = 300 - cup_height
+        cup_width = 140
+        cup_height = 220
+        cup_top_left_x = 100
+        cup_top_left_y = 320 - cup_height
 
         self.canvas.create_rectangle(
             cup_top_left_x, cup_top_left_y, cup_top_left_x + cup_width, cup_top_left_y + cup_height,
