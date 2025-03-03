@@ -239,6 +239,26 @@ class CoffeeMachineApp:
 
 
 
+    def show_coffee_cup(self, drink, size):
+        # Show an animated coffee cup being filled
+        self.canvas.delete("all")  # Clear the canvas
+        size_mapping = {1: 50, 2: 100, 3: 150}  # Size to height mapping
+        target_height = size_mapping[size]
+        color = self.machine.menu[drink]["color"]  # Get the color for the drink
+
+        # Draw a coffee cup with the specific color
+        cup_width = 120
+        cup_height = 200
+        cup_top_left_x = 90
+        cup_top_left_y = 300 - cup_height
+
+        self.canvas.create_rectangle(
+            cup_top_left_x, cup_top_left_y, cup_top_left_x + cup_width, cup_top_left_y + cup_height,
+            fill=color, outline="black")
+
+        # Animate filling the coffee cup
+        self.animate_coffee_fill(target_height)
+
 
 
 # Create the Tkinter window
