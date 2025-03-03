@@ -144,3 +144,32 @@ class CoffeeMachineApp:
             btn = tk.Button(payment_window, text=method,
                             command=lambda m=method, s=size, d=drink: self.process_payment(m, s, d, payment_window))
             btn.pack(pady=5)
+
+    def process_payment(self, method, size, drink, payment_window):
+        # Calculate the price based on the selected drink and size
+        price = self.machine.menu[drink]["price"]
+
+        # Adjust price based on size
+        if size == 2:  # Medium (M)
+            price += 0.50
+        elif size == 3:  # Large (L)
+            price += 1.00
+
+        payment_window.destroy()  # Close payment window
+
+        # Ask user for payment confirmation
+        result = messagebox.askyesno("Payment", f"Do you want to pay {price}€ via {method}?")
+
+        if result:
+            # Payment successful
+            messagebox.showinfo("Payment Successful", f"Payment of {price}€ via {method} successful.")
+
+            # Start preparing the drink
+            preparation_result = self.prepare_drink(drink, size)
+
+            # Show the result of the drink preparation
+            messagebox.showinfo("Preparation", preparation_result)
+
+        else:
+            # Payment failed
+            messagebox.showerror("Payment Failed", "Payment was not completed.")
