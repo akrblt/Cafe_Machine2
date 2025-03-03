@@ -130,3 +130,17 @@ class CoffeeMachineApp:
 
 
 
+    def show_payment_window(self, size, drink, size_window):
+        # Show a window for selecting the payment method
+        size_window.destroy()  # Close size selection window
+        payment_window = tk.Toplevel(self.root)
+        payment_window.title("Select Payment Method")
+
+        tk.Label(payment_window, text="Select Payment Method:", font=("Helvetica", 12)).pack(pady=10)
+
+        # Available payment methods
+        payment_methods = ["Twint", "Cash", "Card"]
+        for method in payment_methods:
+            btn = tk.Button(payment_window, text=method,
+                            command=lambda m=method, s=size, d=drink: self.process_payment(m, s, d, payment_window))
+            btn.pack(pady=5)
