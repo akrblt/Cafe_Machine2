@@ -3,6 +3,7 @@ from tkinter import messagebox
 
 
 class CoffeeMachine:
+    # sprint 1
     def __init__(self):
         # Initial resources for the coffee machine
         self.water = 1000  # milliliters
@@ -13,6 +14,7 @@ class CoffeeMachine:
         self.balance = 0.0  # virtual payment balance (in euros)
 
         # Menu for different drinks with their ingredients and price
+        #Sprint 1
         self.menu = {
             "Espresso": {"water": 50, "coffee_beans": 18, "milk": 0, "price": 1.5, "color": "brown"},
             "Ristretto": {"water": 30, "coffee_beans": 18, "milk": 0, "price": 1.7, "color": "darkred"},
@@ -26,56 +28,61 @@ class CoffeeMachine:
             "Thé": {"water": 200, "coffee_beans": 0, "milk": 0, "price": 1.5, "color": "green"},
         }
 
-        def check_resources(self, drink, size):
-            # Check if there are enough resources to prepare the selected drink
-            drink_data = self.menu[drink]
-            water_required = drink_data["water"] * size
-            coffee_beans_required = drink_data["coffee_beans"] * size
-            milk_required = drink_data["milk"] * size
+    def check_resources(self, drink, size):
+        # Check if there are enough resources to prepare the selected drink
+        drink_data = self.menu[drink]
+        water_required = drink_data["water"] * size
+        coffee_beans_required = drink_data["coffee_beans"] * size
+        milk_required = drink_data["milk"] * size
 
-            # Check for sufficient water, coffee beans, and milk
-            if self.water < water_required:
-                return False, "water"
-            if self.coffee_beans < coffee_beans_required:
-                return False, "coffee_beans"
-            if self.milk < milk_required:
-                return False, "milk"
-            return True, None
+        # Check for sufficient water, coffee beans, and milk
+        if self.water < water_required:
+            return False, "water"
+        if self.coffee_beans < coffee_beans_required:
+            return False, "coffee_beans"
+        if self.milk < milk_required:
+            return False, "milk"
+        return True, None
 
-        def prepare_drink(self, drink, size):
-            # Prepare the selected drink if there are enough resources
-            drink_data = self.menu[drink]
-            water_required = drink_data["water"] * size
-            coffee_beans_required = drink_data["coffee_beans"] * size
-            milk_required = drink_data["milk"] * size
+    def prepare_drink(self, drink, size):
+        #sprint 1
+        # Prepare the selected drink if there are enough resources
+        drink_data = self.menu[drink]
+        water_required = drink_data["water"] * size
+        coffee_beans_required = drink_data["coffee_beans"] * size
+        milk_required = drink_data["milk"] * size
 
-            check, resource = self.check_resources(drink, size)
-            if not check:
-                return f"Insufficient resource: {resource}."
+        check, resource = self.check_resources(drink, size)
+        if not check:
+            return f"Insufficient resource: {resource}."
 
-            # Deduct resources after preparation
-            self.water -= water_required
-            self.coffee_beans -= coffee_beans_required
-            self.milk -= milk_required
-            self.balance += drink_data["price"]
-            self.maintenance_count += 1
+        # Deduct resources after preparation
+        self.water -= water_required
+        self.coffee_beans -= coffee_beans_required
+        self.milk -= milk_required
+        self.balance += drink_data["price"]
+        self.maintenance_count += 1
 
-            # Check if the machine needs cleaning
-            if self.maintenance_count >= 5:
-                return "Machine requires cleaning."
+        # Check if the machine needs cleaning
+        if self.maintenance_count >= 5:
+            return "Machine requires cleaning."
 
-            return f"{drink} ({size} dl) prepared successfully!"
+        return f"{drink} ({size} dl) prepared successfully!"
 
-        def add_resources(self, water, coffee_beans, milk, sugar):
-            # Add resources to the machine
-            self.water += water
-            self.coffee_beans += coffee_beans
-            self.milk += milk
-            self.sugar += sugar
+    def add_resources(self, water, coffee_beans, milk, sugar):
+        # sprint 1
+        # Add resources to the machine
+        self.water += water
+        self.coffee_beans += coffee_beans
+        self.milk += milk
+        self.sugar += sugar
 
-        def clean_machine(self):
-            # Clean the machine by resetting the maintenance counter
-            self.maintenance_count = 0
+    def clean_machine(self):
+
+        # sprint 1
+        # Clean the machine by resetting the maintenance counter
+        self.maintenance_count = 0
+
 
 class CoffeeMachineApp:
     def __init__(self, root):
@@ -85,6 +92,7 @@ class CoffeeMachineApp:
         self.create_widgets()  # Create the user interface widgets
 
     def create_widgets(self):
+        # sprint1
         # Create widgets for the main window
         tk.Label(self.root, text="Coffee Machine", font=("Helvetica", 16, "bold")).pack(pady=10)
 
@@ -127,8 +135,6 @@ class CoffeeMachineApp:
             btn = tk.Button(size_window, text=f"{size_name} - {size_value} dl",
                             command=lambda s=size_value, d=drink: self.show_payment_window(s, d, size_window))
             btn.pack(pady=5)
-
-
 
     def show_payment_window(self, size, drink, size_window):
         # Show a window for selecting the payment method
@@ -181,7 +187,6 @@ class CoffeeMachineApp:
         if "prepared" in result:
             self.show_coffee_cup(drink, size)  # Show coffee cup animation if prepared
 
-
     def show_status(self):
         # Show the current resource status (water, coffee beans, milk, etc.)
         status = (
@@ -233,13 +238,13 @@ class CoffeeMachineApp:
         add_button.grid(row=4, columnspan=2, pady=10)
 
     def clean_machine(self):
+        #sprint 1
         # Clean the machine and reset maintenance counter
         self.machine.clean_machine()
         messagebox.showinfo("Machine Cleaned", "The machine has been successfully cleaned!")
 
-
-
     def show_coffee_cup(self, drink, size):
+        # sprint 1
         # Show an animated coffee cup being filled
         self.canvas.delete("all")  # Clear the canvas
         size_mapping = {1: 50, 2: 100, 3: 150}  # Size to height mapping
@@ -247,10 +252,10 @@ class CoffeeMachineApp:
         color = self.machine.menu[drink]["color"]  # Get the color for the drink
 
         # Draw a coffee cup with the specific color
-        cup_width = 140
-        cup_height = 220
-        cup_top_left_x = 100
-        cup_top_left_y = 320 - cup_height
+        cup_width = 120
+        cup_height = 200
+        cup_top_left_x = 90
+        cup_top_left_y = 300 - cup_height
 
         self.canvas.create_rectangle(
             cup_top_left_x, cup_top_left_y, cup_top_left_x + cup_width, cup_top_left_y + cup_height,
@@ -272,7 +277,6 @@ class CoffeeMachineApp:
                 self.root.after(50, fill_coffee)  # Call the fill function repeatedly
 
         fill_coffee()
-
 
 
 # Create the Tkinter window
