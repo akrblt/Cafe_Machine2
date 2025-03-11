@@ -29,6 +29,7 @@ class CoffeeMachine:
         }
 
     def check_resources(self, drink, size):
+        #sprint 2
         # Check if there are enough resources to prepare the selected drink
         drink_data = self.menu[drink]
         water_required = drink_data["water"] * size
@@ -85,6 +86,7 @@ class CoffeeMachine:
 
 
 class CoffeeMachineApp:
+    #sprint 2
     def __init__(self, root):
         self.machine = CoffeeMachine()  # Create an instance of the CoffeeMachine
         self.root = root
@@ -111,6 +113,7 @@ class CoffeeMachineApp:
             btn.pack(pady=5)
 
         # Create action buttons
+        #sprint 2
         frame_actions = tk.Frame(self.root)
         frame_actions.pack(pady=10)
         tk.Button(frame_actions, text="Show Resources", command=self.show_status, width=20).pack(pady=5)
