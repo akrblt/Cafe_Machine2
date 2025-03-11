@@ -266,6 +266,8 @@ class CoffeeMachineApp:
 
     def animate_coffee_fill(self, target_height):
         # Animate the coffee filling into the cup
+        #check the animate cup
+        #print(self.machine.coffee_beans)
         current_height = 0
         increment = 5  # Filling speed
 
