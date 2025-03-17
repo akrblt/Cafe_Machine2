@@ -113,7 +113,7 @@ class CoffeeMachineApp:
             btn.pack(pady=5)
 
         # Create action buttons
-        #sprint 2
+        #sprint 3
         frame_actions = tk.Frame(self.root)
         frame_actions.pack(pady=10)
         tk.Button(frame_actions, text="Show Resources", command=self.show_status, width=20).pack(pady=5)
@@ -126,6 +126,7 @@ class CoffeeMachineApp:
         self.canvas.pack(pady=10)
 
     def show_size_and_payment_window(self, drink):
+
         # Show a window for selecting the size of the drink
         size_window = tk.Toplevel(self.root)
         size_window.title(f"Select Size for {drink}")
@@ -155,7 +156,7 @@ class CoffeeMachineApp:
             btn.pack(pady=5)
 
     def process_payment(self, method, size, drink, payment_window):
-        # sprint 2
+        # sprint 3
         # Calculate the price based on the selected drink and size
         price = self.machine.menu[drink]["price"]
 
@@ -227,7 +228,7 @@ class CoffeeMachineApp:
         sugar_entry.grid(row=3, column=1, padx=5, pady=5)
 
         def add_resources():
-            # sprint 2
+            # sprint 3
             # Add resources to the machine after valid input
             try:
                 water = int(water_entry.get() or 0)
@@ -271,7 +272,7 @@ class CoffeeMachineApp:
         self.animate_coffee_fill(target_height)
 
     def animate_coffee_fill(self, target_height):
-        # sprint 2
+        # sprint 3
         # Animate the coffee filling into the cup
         #check the animate cup
         #print(self.machine.coffee_beans)
