@@ -155,6 +155,7 @@ class CoffeeMachineApp:
             btn.pack(pady=5)
 
     def process_payment(self, method, size, drink, payment_window):
+        # sprint 2
         # Calculate the price based on the selected drink and size
         price = self.machine.menu[drink]["price"]
 
@@ -184,6 +185,7 @@ class CoffeeMachineApp:
             messagebox.showerror("Payment Failed", "Payment was not completed.")
 
     def prepare_drink(self, drink, size):
+        # sprint 2
         # Prepare the selected drink and show the result
         result = self.machine.prepare_drink(drink, size)
         messagebox.showinfo("Preparation", result)
@@ -225,6 +227,7 @@ class CoffeeMachineApp:
         sugar_entry.grid(row=3, column=1, padx=5, pady=5)
 
         def add_resources():
+            # sprint 2
             # Add resources to the machine after valid input
             try:
                 water = int(water_entry.get() or 0)
@@ -268,6 +271,7 @@ class CoffeeMachineApp:
         self.animate_coffee_fill(target_height)
 
     def animate_coffee_fill(self, target_height):
+        # sprint 2
         # Animate the coffee filling into the cup
         #check the animate cup
         #print(self.machine.coffee_beans)
