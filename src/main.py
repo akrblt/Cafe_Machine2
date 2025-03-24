@@ -126,6 +126,7 @@ class CoffeeMachineApp:
         self.canvas.pack(pady=10)
 
     def show_size_and_payment_window(self, drink):
+        # sprint 4
 
         # Show a window for selecting the size of the drink
         size_window = tk.Toplevel(self.root)
@@ -141,6 +142,7 @@ class CoffeeMachineApp:
             btn.pack(pady=5)
 
     def show_payment_window(self, size, drink, size_window):
+        # sprint 4
         # Show a window for selecting the payment method
         size_window.destroy()  # Close size selection window
         payment_window = tk.Toplevel(self.root)
@@ -194,6 +196,7 @@ class CoffeeMachineApp:
             self.show_coffee_cup(drink, size)  # Show coffee cup animation if prepared
 
     def show_status(self):
+        # sprint 3
         # Show the current resource status (water, coffee beans, milk, etc.)
         status = (
             f"Current Resources:\n"
@@ -207,6 +210,7 @@ class CoffeeMachineApp:
         messagebox.showinfo("Resource Status", status)
 
     def add_resources_window(self):
+        # sprint 3
         # Show a window for adding more resources to the machine
         add_window = tk.Toplevel(self.root)
         add_window.title("Add Resources")
