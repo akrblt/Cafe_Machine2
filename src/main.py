@@ -142,7 +142,7 @@ class CoffeeMachineApp:
             btn.pack(pady=5)
 
     def show_payment_window(self, size, drink, size_window):
-        # sprint 4
+        # sprint  4
         # Show a window for selecting the payment method
         size_window.destroy()  # Close size selection window
         payment_window = tk.Toplevel(self.root)
