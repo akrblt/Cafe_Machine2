@@ -126,7 +126,7 @@ class CoffeeMachineApp:
         self.canvas.pack(pady=10)
 
     def show_size_and_payment_window(self, drink):
-        # sprint 4
+        # sprint4
 
         # Show a window for selecting the size of the drink
         size_window = tk.Toplevel(self.root)
